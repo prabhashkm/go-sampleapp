@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# Global variables
+readonly RED='\033[31m'
+readonly GREEN='\033[32m'
+readonly YELLOW='\033[33m'
+readonly GREY='\033[37m'
+readonly CLEAR='\033[0m'
+
+error()
+{
+    echo -e ${RED}$1${CLEAR} >&2
+    exit 1
+}
+
+clear_exit()
+{
+    echo -e ${CLEAR}
+    exit $1
+}
+
+which golint &>/dev/null || error "Failed to locate golint"
+which gofmt &>/dev/null || error "Failed to locate gofmt"
+which go &>/dev/null || error "Failed to locate go"
+which gb &>/dev/null || error "Failed to locate gb"
+
+export GOPATH=$(pwd)
+
+exit_code=0
+files=$( git diff-index --cached HEAD --name-only | grep -E '\.go$' )
+for file in $files; do
+    if [ -f $file ]; then
+        echo -e "${GREY}+ ${GREEN}Cleanup syntax gofmt: ${file}${RED}"
+        gofmt ${file} >${file}.fmt || exit_code=1
+        mv ${file}.fmt ${file}
+        echo -en ${CLEAR}
+    fi
+done
+
+echo -e "${GREY}+ ${GREEN}Verify syntax using golint: ${file}${RED}"
+golint src/ || clear_exit 1
+
+echo -e "${GREY}+ ${GREEN}Verify syntax using go vet: ${file}${RED}"
+cd src/github.com/go-sampleapp
+go vet || clear_exit 1
+
+echo -e "${GREY}+ ${GREEN}Run test(s) for project:${CLEAR}"
+gb test || exit_code=1
+
+echo -e "${GREY}+ ${GREEN}Build project to check for error(s):${CLEAR}"
+gb build || exit_code=1
+
+clear_exit $exit_code
