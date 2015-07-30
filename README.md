@@ -23,7 +23,7 @@ EOF
 
 # Install gb
 
-install gb to manage dependencies http://getgb.io
+Install gb to manage dependencies http://getgb.io
 
 ```bash
 source ~/.bash_profile
