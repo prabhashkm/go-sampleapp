@@ -23,7 +23,7 @@ EOF
 
 # Install gb
 
-install gb to manage dependencies http://getgb.io
+Install gb to manage dependencies http://getgb.io
 
 ```bash
 source ~/.bash_profile
@@ -76,7 +76,8 @@ EOF
 Copy the sample application from this repository.
 
 ```bash
-git archive --remote=https://github.com/mickep76/go-sampleapp.git master src | tar xvf -
+git clone https://github.com/mickep76/go-sampleapp.git ~/code/go-sampleapp-orig
+cp -r ~/code/go-sampleapp-orig/src .
 ```
 
 # Vendor third-party packages
@@ -97,7 +98,7 @@ make
 # Test application
 
 ```
-git archive --remote=https://github.com/mickep76/go-sampleapp.git master examples | tar xvf -
+cp -r ~/code/go-sampleapp-orig/examples .
 bin/go-sampleapp -h
 bin/go-sampleapp -v -f examples/sample.yaml
 bin/go-sampleapp -v -f examples/sample.json
@@ -115,7 +116,7 @@ go get -u github.com/golang/lint/golint
 Now download the githooks and activate them.
 
 ```bash
-git archive --remote=https://github.com/mickep76/go-sampleapp.git master .githooks | tar xvf -
+cp -r ~/code/go-sampleapp-orig/.githooks .
 .githooks/activate
 ```
 
