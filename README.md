@@ -76,8 +76,8 @@ EOF
 Copy the sample application from this repository.
 
 ```bash
-git clone https://github.com/mickep76/go-sampleapp.git ~/code/go-sampleapp-orig
-cp -r ~/code/go-sampleapp-orig/src .
+git clone https://github.com/mickep76/go-sampleapp.git ~/code/go-sampleapp-gh
+cp -r ~/code/go-sampleapp-gh/src .
 ```
 
 # Vendor third-party packages
@@ -98,7 +98,7 @@ make
 # Test application
 
 ```
-cp -r ~/code/go-sampleapp-orig/examples .
+cp -r ~/code/go-sampleapp-gh/examples .
 bin/go-sampleapp -h
 bin/go-sampleapp -v -f examples/sample.yaml
 bin/go-sampleapp -v -f examples/sample.json
@@ -116,7 +116,7 @@ go get -u github.com/golang/lint/golint
 Now download the githooks and activate them.
 
 ```bash
-cp -r ~/code/go-sampleapp-orig/.githooks .
+cp -r ~/code/go-sampleapp-gh/.githooks .
 .githooks/activate
 ```
 
