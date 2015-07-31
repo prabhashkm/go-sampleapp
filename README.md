@@ -17,7 +17,7 @@ Add GOPATH environment variable.
 ```bash
 cat << EOF >>~/.bash_profile
 export GOPATH=$HOME/go
-export PATH=$PATH:${GOPATH}/bin
+export PATH=\$PATH:\${GOPATH}/bin
 EOF
 ```
 
